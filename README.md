@@ -141,7 +141,7 @@
         }
     };
 
-    // Langsung menjalankan fungsi ST tanpa delay
+    // Langsung menjalankan fungsi ST tanpa delaay
     ST();
 })();
 </script>
