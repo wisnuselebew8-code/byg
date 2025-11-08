@@ -5,264 +5,189 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dunia Digital - Top Up</title>
 <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
 <style>
-:root { --biru:#0d6efd; }
-body { background: #b3d9ff; }
-.btn { padding: 6px 10px; border-radius: 6px; color: white; font-weight: 600; }
-.btn-beli { background: var(--biru); }
-.btn-beli:hover { background: #0a58ca; }
-.section { max-width: 1100px; margin: auto; padding: 10px; }
-.card { background: white; border-radius: 10px; padding: 15px; box-shadow: 0 4px 18px rgba(0,0,0,.12); }
-#slider img { width: 100%; height: 260px; object-fit: cover; }
+body { background:#b3d9ff; font-family:sans-serif; }
+.btn { padding:6px 10px; border-radius:6px; color:white; font-weight:600; }
+.btn-beli { background:#0d6efd; }
+.btn-beli:hover { background:#0a58ca; }
+.section { max-width:1100px; margin:auto; padding:10px; }
+.card { background:white; border-radius:10px; padding:15px; box-shadow:0 4px 18px rgba(0,0,0,.12); }
 #waBtn {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background:#25d366;
-    color:white;
-    border-radius:50%;
-    width:60px;
-    height:60px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
-    z-index:999;
+  position: fixed; top:20px; right:20px;
+  background:#25d366;color:white;border-radius:50%;
+  width:60px;height:60px;display:flex;align-items:center;justify-content:center;
+  font-size:28px; box-shadow:0 4px 10px rgba(0,0,0,0.2); z-index:999;
 }
 </style>
 </head>
 <body>
 
-<!-- WhatsApp Button -->
+<!-- WhatsApp -->
 <a id="waBtn" href="https://wa.me/6289654726537" target="_blank">📱</a>
 
 <!-- HERO -->
-<section class="w-full relative overflow-hidden py-10" style="background:#b3d9ff;">
-    <div class="absolute inset-0 opacity-40"
-         style="background: radial-gradient(circle at top, rgba(0,102,255,0.3), transparent 90%),
-                    radial-gradient(circle at bottom, rgba(0,102,255,0.3), transparent 90%);">
+<section class="w-full relative overflow-hidden py-10">
+  <div class="text-center text-black px-4">
+    <h1 class="text-4xl md:text-5xl font-extrabold drop-shadow-xl">Dunia Digital</h1>
+    <p class="text-gray-700 mt-2 text-lg">Top Up Game & E-Wallet Termurah | Proses Kilat</p>
+    <div class="mt-6 max-w-md mx-auto bg-white/70 backdrop-blur-xl border border-blue-400/40 rounded-2xl p-3 flex items-center">
+      <input id="searchInput" class="flex-1 bg-transparent text-black outline-none" placeholder="Cari game atau e-wallet...">
+      <button id="searchBtn" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl font-semibold text-white">Cari</button>
     </div>
+  </div>
 
-    <div class="relative z-10 text-center text-black px-4">
-        <h1 class="text-4xl md:text-5xl font-extrabold drop-shadow-xl">Dunia Digital</h1>
-        <p class="text-gray-700 mt-2 text-lg">Top Up Game & E-Wallet Termurah | Proses Kilat</p>
-
-        <div class="mt-6 max-w-md mx-auto bg-white/70 backdrop-blur-xl 
-                    border border-blue-400/40 rounded-2xl p-3 flex items-center">
-            <input id="searchInput" class="flex-1 bg-transparent text-black outline-none"
-                   placeholder="Cari game atau e-wallet...">
-            <button id="searchBtn" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl font-semibold text-white">
-                Cari
-            </button>
-        </div>
+  <!-- Swiper Slider -->
+  <div class="mt-10 max-w-4xl mx-auto">
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img src="https://i.ibb.co/5h3g8c0/ff.png" alt="Free Fire" class="w-full h-64 object-cover"></div>
+        <div class="swiper-slide"><img src="https://i.ibb.co/0ZqWQ9X/ml.png" alt="Mobile Legends" class="w-full h-64 object-cover"></div>
+        <div class="swiper-slide"><img src="https://i.ibb.co/7b7bVxg/pubg.png" alt="PUBG" class="w-full h-64 object-cover"></div>
+      </div>
+      <div class="swiper-pagination"></div>
     </div>
-
-    <!-- SLIDER -->
-    <div class="relative z-10 max-w-4xl mx-auto mt-10 overflow-hidden rounded-xl shadow-xl bg-gray-200">
-        <div id="slider" class="flex transition-all duration-700">
-            <div class="min-w-full"><img src="https://i.ibb.co/5h3g8c0/ff.png" alt="Free Fire"></div>
-            <div class="min-w-full"><img src="https://i.ibb.co/0ZqWQ9X/ml.png" alt="Mobile Legends"></div>
-            <div class="min-w-full"><img src="https://i.ibb.co/7b7bVxg/pubg.png" alt="PUBG"></div>
-        </div>
-    </div>
+  </div>
 </section>
 
-<!-- KATEGORI BULAT -->
+<!-- KATEGORI -->
 <div class="section mt-6">
-    <h2 class="text-2xl font-bold mb-4 text-black text-center">Kategori</h2>
-    <div class="grid grid-cols-4 md:grid-cols-6 gap-4 text-center">
-
-        <div class="flex flex-col items-center category-btn" data-category="ff">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/5h3g8c0/ff.png" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">Free Fire</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="ml">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/0ZqWQ9X/ml.png" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">Mobile Legends</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="pubg">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/7b7bVxg/pubg.png" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">PUBG</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="dana">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">DANA</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="ovo">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">OVO</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="gopay">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">GoPay</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="pulsa">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/j4tnYhW/pulsa.png" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">Pulsa</p>
-        </div>
-
-        <div class="flex flex-col items-center category-btn" data-category="data">
-            <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
-                <img src="https://i.ibb.co/VS40y7W/data.png" class="w-full h-full object-cover">
-            </div>
-            <p class="mt-2 font-semibold text-black text-sm">Paket Data</p>
-        </div>
-
+  <h2 class="text-2xl font-bold mb-4 text-black text-center">Kategori</h2>
+  <div class="grid grid-cols-4 md:grid-cols-6 gap-4 text-center">
+    <div class="flex flex-col items-center category-btn" data-category="ff">
+      <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
+        <img src="https://i.ibb.co/5h3g8c0/ff.png" class="w-full h-full object-cover">
+      </div>
+      <p class="mt-2 font-semibold text-black text-sm">Free Fire</p>
     </div>
+    <div class="flex flex-col items-center category-btn" data-category="ml">
+      <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
+        <img src="https://i.ibb.co/0ZqWQ9X/ml.png" class="w-full h-full object-cover">
+      </div>
+      <p class="mt-2 font-semibold text-black text-sm">Mobile Legends</p>
+    </div>
+    <div class="flex flex-col items-center category-btn" data-category="pubg">
+      <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
+        <img src="https://i.ibb.co/7b7bVxg/pubg.png" class="w-full h-full object-cover">
+      </div>
+      <p class="mt-2 font-semibold text-black text-sm">PUBG</p>
+    </div>
+    <div class="flex flex-col items-center category-btn" data-category="dana">
+      <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
+        <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
+      </div>
+      <p class="mt-2 font-semibold text-black text-sm">DANA</p>
+    </div>
+    <div class="flex flex-col items-center category-btn" data-category="ovo">
+      <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
+        <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
+      </div>
+      <p class="mt-2 font-semibold text-black text-sm">OVO</p>
+    </div>
+    <div class="flex flex-col items-center category-btn" data-category="gopay">
+      <div class="w-16 h-16 rounded-full bg-white shadow-md flex items-center justify-center overflow-hidden">
+        <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
+      </div>
+      <p class="mt-2 font-semibold text-black text-sm">GoPay</p>
+    </div>
+  </div>
 </div>
 
 <!-- PRODUK -->
 <div class="section">
-<h1 class="text-3xl font-bold mb-6 text-center text-black">Menu Produk</h1>
-<div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
+  <h1 class="text-3xl font-bold mb-6 text-center text-black">Menu Produk</h1>
+  <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
-<!-- Produk Diamond -->
-<div class="card product-item" data-category="ff">
-<p class="font-bold text-lg">5 Diamond</p>
-<p class="text-gray-600">Rp 900</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="5 Diamond" data-price="900">Beli</button>
-</div>
-<div class="card product-item" data-category="ff">
-<p class="font-bold text-lg">50 Diamond</p>
-<p class="text-gray-600">Rp 6.100</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="50 Diamond" data-price="6100">Beli</button>
-</div>
-<div class="card product-item" data-category="ff">
-<p class="font-bold text-lg">70 Diamond</p>
-<p class="text-gray-600">Rp 9.000</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="70 Diamond" data-price="9000">Beli</button>
-</div>
-<div class="card product-item" data-category="ff">
-<p class="font-bold text-lg">140 Diamond</p>
-<p class="text-gray-600">Rp 17.000</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="140 Diamond" data-price="17000">Beli</button>
-</div>
-<div class="card product-item" data-category="ff">
-<p class="font-bold text-lg">355 Diamond</p>
-<p class="text-gray-600">Rp 48.000</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="355 Diamond" data-price="48000">Beli</button>
-</div>
+    <!-- Diamond -->
+    <div class="card product-item" data-category="ff"><p class="font-bold">5 Diamond</p><p>Rp900</p><button class="btn btn-beli buy-btn" data-name="5 Diamond" data-price="900">Beli</button></div>
+    <div class="card product-item" data-category="ff"><p class="font-bold">50 Diamond</p><p>Rp6.100</p><button class="btn btn-beli buy-btn" data-name="50 Diamond" data-price="6100">Beli</button></div>
+    <div class="card product-item" data-category="ff"><p class="font-bold">70 Diamond</p><p>Rp9.000</p><button class="btn btn-beli buy-btn" data-name="70 Diamond" data-price="9000">Beli</button></div>
+    <div class="card product-item" data-category="ff"><p class="font-bold">140 Diamond</p><p>Rp17.000</p><button class="btn btn-beli buy-btn" data-name="140 Diamond" data-price="17000">Beli</button></div>
+    <div class="card product-item" data-category="ff"><p class="font-bold">355 Diamond</p><p>Rp48.000</p><button class="btn btn-beli buy-btn" data-name="355 Diamond" data-price="48000">Beli</button></div>
 
-<!-- Produk Pulsa -->
-<div class="card product-item" data-category="pulsa">
-<p class="font-bold text-lg">Pulsa 1.000</p>
-<p class="text-gray-600">Rp 1.200</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="Pulsa 1.000" data-price="1200">Beli</button>
-</div>
+    <!-- Pulsa -->
+    <div class="card product-item" data-category="pulsa"><p class="font-bold">Pulsa 1.000</p><p>Rp1.200</p><button class="btn btn-beli buy-btn" data-name="Pulsa 1.000" data-price="1200">Beli</button></div>
 
-<!-- Produk DANA, OVO, GoPay -->
-<script>
-const ewalletPrices = [1000,2000,3000,4000,5000,10000,20000,25000,30000];
-const categories = ['dana','ovo','gopay'];
-let productHTML = '';
-categories.forEach(cat=>{
-    ewalletPrices.forEach(p=>{
-        let priceWithAdmin = p + 300;
-        productHTML += `
-<div class="card product-item" data-category="${cat}">
-<p class="font-bold text-lg">${p.toLocaleString()} ${cat.toUpperCase()}</p>
-<p class="text-gray-600">Rp ${priceWithAdmin.toLocaleString()}</p>
-<button class="btn btn-beli buy-btn mt-2" data-name="${p} ${cat.toUpperCase()}" data-price="${priceWithAdmin}">Beli</button>
-</div>
-        `;
+    <!-- DANA / OVO / GoPay -->
+    <div class="card product-item" data-category="dana"><p class="font-bold">DANA 1000</p><p>Rp1.300</p><button class="btn btn-beli buy-btn" data-name="DANA 1000" data-price="1300">Beli</button></div>
+    <div class="card product-item" data-category="ovo"><p class="font-bold">OVO 1000</p><p>Rp1.300</p><button class="btn btn-beli buy-btn" data-name="OVO 1000" data-price="1300">Beli</button></div>
+    <div class="card product-item" data-category="gopay"><p class="font-bold">GoPay 1000</p><p>Rp1.300</p><button class="btn btn-beli buy-btn" data-name="GoPay 1000" data-price="1300">Beli</button></div>
+
+    <!-- Tambahan DANA / OVO / GoPay 2.000 - 30.000 + admin 300 -->
+    <script>
+    const ewallets = ['dana','ovo','gopay'];
+    const amounts = [2000,3000,4000,5000,10000,20000,25000,30000];
+    const grid = document.getElementById('productGrid');
+    ewallets.forEach(w=>{
+      amounts.forEach(a=>{
+        const div = document.createElement('div');
+        div.className='card product-item';
+        div.dataset.category=w;
+        const price = a+300;
+        div.innerHTML=`<p class="font-bold">${w.toUpperCase()} ${a}</p><p>Rp${price.toLocaleString()}</p>
+        <button class="btn btn-beli buy-btn" data-name="${w.toUpperCase()} ${a}" data-price="${price}">Beli</button>`;
+        grid.appendChild(div);
+      });
     });
-});
-document.addEventListener('DOMContentLoaded',()=>{ 
-    document.getElementById('productGrid').innerHTML += productHTML;
-});
-</script>
+    </script>
+  </div>
 </div>
 
 <!-- PEMBAYARAN -->
 <div class="section">
-<div id="payBox" class="card" style="display:none;">
-<h2 class="text-xl font-bold mb-2">Pembayaran</h2>
-<p class="mb-2">Paket: <span id="paket"></span></p>
-<p class="mb-4">Harga: <span id="harga"></span></p>
-
-<div class="text-center mb-4">
-<img src="https://linguistic-tan-nb15r57suf.edgeone.app/QRIS.png"
-     style="width:350px;height:350px;margin:auto;">
+  <div id="payBox" class="card" style="display:none;">
+    <h2 class="text-xl font-bold mb-2">Pembayaran</h2>
+    <p>Paket: <span id="paket"></span></p>
+    <p>Harga: <span id="harga"></span></p>
+    <div class="text-center mb-4">
+      <img id="qrImage" src="https://linguistic-tan-nb15r57suf.edgeone.app/QRIS.png" style="width:300px;height:300px;margin:auto;">
+    </div>
+    <label>Email / No HP:</label><input id="email" class="w-full border rounded px-2 py-2 mb-3">
+    <label>ID Game:</label><input id="userid" class="w-full border rounded px-2 py-2 mb-3">
+    <button id="payBtn" class="btn btn-beli w-full">Bayar</button>
+  </div>
 </div>
 
-<label>Email / No HP:</label>
-<input id="email" class="w-full border rounded px-2 py-2 mb-3">
-
-<label>ID Game:</label>
-<input id="userid" class="w-full border rounded px-2 py-2 mb-3">
-
-<button id="payBtn" class="btn btn-beli w-full">Bayar</button>
-</div>
-</div>
-
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 <script>
-/* SLIDER OTOMATIS */
-let currentSlide = 0;
-function nextSlide(){
-    const slider = document.getElementById("slider");
-    const total = slider.children.length;
-    currentSlide = (currentSlide + 1) % total;
-    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-}
-setInterval(nextSlide, 3000);
+// Slider
+const swiper = new Swiper(".mySwiper",{ loop:true, pagination:{el:".swiper-pagination",clickable:true}, autoplay:{delay:3000} });
 
-/* KATEGORI FILTER */
+// Filter kategori
 document.querySelectorAll(".category-btn").forEach(btn=>{
-    btn.onclick = ()=>{
-        let cat = btn.dataset.category;
-        document.querySelectorAll(".product-item").forEach(p=>{
-            if(cat==='all'||p.dataset.category===cat) p.style.display='block';
-            else p.style.display='none';
-        });
-    }
+  btn.onclick=()=>{
+    let cat=btn.dataset.category;
+    document.querySelectorAll(".product-item").forEach(p=>{
+      p.style.display=(p.dataset.category==cat)?'block':'none';
+    });
+  };
 });
 
-/* TELEGRAM ORDER */
-let botConfig = { chatId:"8330927007", token:"8360075953:AAGv3RnjtLjtaAwzAPJpGNTBFDNkOJQtf-I" };
-
+// Buy Button
 document.addEventListener('click',e=>{
-    if(e.target.classList.contains('buy-btn')){
-        let d=e.target.dataset.name;
-        let p=e.target.dataset.price;
-        document.getElementById("paket").innerText = d;
-        document.getElementById("harga").innerText = "Rp " + p;
-        let box = document.getElementById("payBox");
-        box.style.display="block";
-        box.scrollIntoView({behavior:"smooth"});
-    }
+  if(e.target.classList.contains('buy-btn')){
+    let d=e.target.dataset.name;
+    let p=e.target.dataset.price;
+    document.getElementById("paket").innerText=d;
+    document.getElementById("harga").innerText="Rp "+p;
+    document.getElementById("payBox").style.display="block";
+    document.getElementById("payBox").scrollIntoView({behavior:"smooth"});
+  }
 });
 
-document.getElementById("payBtn").onclick = async function(){
- let email=document.getElementById("email").value;
- let uid=document.getElementById("userid").value;
- let paket=document.getElementById("paket").innerText;
- let harga=document.getElementById("harga").innerText;
- let msg=`Pembelian Baru%0AEmail: ${email}%0AID: ${uid}%0APaket: ${paket}%0AHarga: ${harga}`;
- await fetch(`https://api.telegram.org/bot${botConfig.token}/sendMessage?chat_id=${botConfig.chatId}&text=${msg}`);
- alert("Done. Terima kasih sudah belanja di Dunia Digital.");
+// Telegram Order
+let botConfig={ chatId:"8330927007", token:"8360075953:AAGv3RnjtLjtaAwzAPJpGNTBFDNkOJQtf-I"};
+document.getElementById("payBtn").onclick=async function(){
+  let email=document.getElementById("email").value;
+  let uid=document.getElementById("userid").value;
+  let paket=document.getElementById("paket").innerText;
+  let harga=document.getElementById("harga").innerText;
+  let msg=`Pembelian Baru%0AEmail: ${encodeURIComponent(email)}%0AID: ${encodeURIComponent(uid)}%0APaket: ${encodeURIComponent(paket)}%0AHarga: ${encodeURIComponent(harga)}`;
+  await fetch(`https://api.telegram.org/bot${botConfig.token}/sendMessage?chat_id=${botConfig.chatId}&text=${msg}`);
+  alert("Done. Terima kasih sudah belanja di Dunia Digital.");
 };
 </script>
 
 </body>
-</html>
+          </html>
