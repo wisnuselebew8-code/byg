@@ -24,22 +24,14 @@ body { background:#b3d9ff; font-family:sans-serif; }
 </head>
 <body>
 
-<!-- WhatsApp -->
 <a id="waBtn" href="https://wa.me/6289654726537" target="_blank">📱</a>
 
-<!-- HERO -->
 <section class="w-full relative overflow-hidden py-10">
   <div class="text-center text-black px-4">
-    <h1 class="text-4xl md:text-5xl font-extrabold drop-shadow-xl">Dunia Digital</h1>
+    <h1 class="text-4xl md:text-5xl font-extrabold">Dunia Digital</h1>
     <p class="text-gray-700 mt-2 text-lg">Top Up Game & E-Wallet Termurah | Proses Kilat</p>
-
-    <div class="mt-6 max-w-md mx-auto bg-white/70 backdrop-blur-xl border border-blue-400/40 rounded-2xl p-3 flex items-center">
-      <input id="searchInput" class="flex-1 bg-transparent text-black outline-none" placeholder="Cari game atau e-wallet...">
-      <button id="searchBtn" class="px-5 py-2 bg-blue-600 hover:bg-blue-700 rounded-xl font-semibold text-white">Cari</button>
-    </div>
   </div>
 
-  <!-- Swiper slider -->
   <div class="swiper mySwiper mt-10 max-w-4xl mx-auto">
     <div class="swiper-wrapper">
       <div class="swiper-slide"><img src="https://i.ibb.co/5h3g8c0/ff.png" class="w-full h-64 object-cover"></div>
@@ -50,78 +42,24 @@ body { background:#b3d9ff; font-family:sans-serif; }
   </div>
 </section>
 
-<!-- KATEGORI -->
-<div class="section mt-6">
-  <h2 class="text-2xl font-bold mb-4 text-black text-center">Kategori</h2>
-
-  <div class="grid grid-cols-4 md:grid-cols-6 gap-4 text-center">
-
-    <div class="flex flex-col items-center category-btn" data-category="ff">
-      <div class="w-16 h-16 rounded-full bg-white shadow-md overflow-hidden">
-        <img src="https://i.ibb.co/5h3g8c0/ff.png" class="w-full h-full object-cover">
-      </div>
-      <p class="mt-2 font-semibold text-black text-sm">Free Fire</p>
-    </div>
-
-    <div class="flex flex-col items-center category-btn" data-category="ml">
-      <div class="w-16 h-16 rounded-full bg-white shadow-md overflow-hidden">
-        <img src="https://i.ibb.co/0ZqWQ9X/ml.png" class="w-full h-full object-cover">
-      </div>
-      <p class="mt-2 font-semibold text-black text-sm">Mobile Legends</p>
-    </div>
-
-    <div class="flex flex-col items-center category-btn" data-category="pubg">
-      <div class="w-16 h-16 rounded-full bg-white shadow-md overflow-hidden">
-        <img src="https://i.ibb.co/7b7bVxg/pubg.png" class="w-full h-full object-cover">
-      </div>
-      <p class="mt-2 font-semibold text-black text-sm">PUBG</p>
-    </div>
-
-    <div class="flex flex-col items-center category-btn" data-category="dana">
-      <div class="w-16 h-16 rounded-full bg-white shadow-md overflow-hidden">
-        <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
-      </div>
-      <p class="mt-2 font-semibold text-black text-sm">DANA</p>
-    </div>
-
-    <div class="flex flex-col items-center category-btn" data-category="ovo">
-      <div class="w-16 h-16 rounded-full bg-white shadow-md overflow-hidden">
-        <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
-      </div>
-      <p class="mt-2 font-semibold text-black text-sm">OVO</p>
-    </div>
-
-    <div class="flex flex-col items-center category-btn" data-category="gopay">
-      <div class="w-16 h-16 rounded-full bg-white shadow-md overflow-hidden">
-        <img src="https://i.ibb.co/5TV4xDm/ewallet.jpg" class="w-full h-full object-cover">
-      </div>
-      <p class="mt-2 font-semibold text-black text-sm">GoPay</p>
-    </div>
-
-  </div>
-</div>
-
-<!-- PRODUK -->
 <div class="section">
   <h1 class="text-3xl font-bold mb-6 text-center">Menu Produk</h1>
 
   <div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-4">
 
-    <!-- Diamond -->
-    <div class="card product-item" data-category="ff"><p class="font-bold">5 Diamond</p><p>Rp900</p><button class="btn btn-beli buy-btn" data-name="5 Diamond" data-price="900">Beli</button></div>
-    <div class="card product-item" data-category="ff"><p class="font-bold">50 Diamond</p><p>Rp6100</p><button class="btn btn-beli buy-btn" data-name="50 Diamond" data-price="6100">Beli</button></div>
-    <div class="card product-item" data-category="ff"><p class="font-bold">70 Diamond</p><p>Rp9000</p><button class="btn btn-beli buy-btn" data-name="70 Diamond" data-price="9000">Beli</button></div>
-    <div class="card product-item" data-category="ff"><p class="font-bold">140 Diamond</p><p>Rp17000</p><button class="btn btn-beli buy-btn" data-name="140 Diamond" data-price="17000">Beli</button></div>
-    <div class="card product-item" data-category="ff"><p class="font-bold">355 Diamond</p><p>Rp48000</p><button class="btn btn-beli buy-btn" data-name="355 Diamond" data-price="48000">Beli</button></div>
+    <div class="card product-item">
+      <p class="font-bold">5 Diamond</p><p>Rp900</p>
+      <button class="btn btn-beli buy-btn" data-name="5 Diamond" data-price="900">Beli</button>
+    </div>
 
-    <!-- Pulsa -->
-    <div class="card product-item" data-category="pulsa"><p class="font-bold">Pulsa 1000</p><p>Rp1200</p>
-    <button class="btn btn-beli buy-btn" data-name="Pulsa 1000" data-price="1200">Beli</button></div>
+    <div class="card product-item">
+      <p class="font-bold">Pulsa 1000</p><p>Rp1200</p>
+      <button class="btn btn-beli buy-btn" data-name="Pulsa 1000" data-price="1200">Beli</button>
+    </div>
 
-    <!-- DANA / OVO / GoPay -->
     <script>
       const grid = document.getElementById("productGrid");
-      const ewallets = ["dana","ovo","gopay"];
+      const ewallets = ["dana","gopay"];
       const nominal = [1000,2000,3000,4000,5000,10000,20000,25000,30000];
 
       ewallets.forEach(w=>{
@@ -129,12 +67,14 @@ body { background:#b3d9ff; font-family:sans-serif; }
           let price = n + 300;
           let div = document.createElement("div");
           div.className="card product-item";
-          div.dataset.category = w;
           div.innerHTML = `
               <p class="font-bold">${w.toUpperCase()} ${n}</p>
               <p>Rp${price.toLocaleString()}</p>
-              <button class="btn btn-beli buy-btn" data-name="${w.toUpperCase()} ${n}" data-price="${price}">Beli</button>
-          `;
+              <button class="btn btn-beli buy-btn"
+                data-name="${w.toUpperCase()} ${n}"
+                data-price="${price}">
+                Beli
+              </button>`;
           grid.appendChild(div);
         });
       });
@@ -143,33 +83,22 @@ body { background:#b3d9ff; font-family:sans-serif; }
   </div>
 </div>
 
-<!-- SCRIPTS -->
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
 <script>
-// Slider
 const swiper = new Swiper(".mySwiper",{
   loop:true,
-  pagination:{ el:".swiper-pagination", clickable:true },
-  autoplay:{ delay:3000 }
+  pagination:{el:".swiper-pagination",clickable:true},
+  autoplay:{delay:3000}
 });
 
-// Kategori filter
-document.querySelectorAll(".category-btn").forEach(btn=>{
-  btn.onclick = ()=>{
-    let cat = btn.dataset.category;
-    document.querySelectorAll(".product-item").forEach(item=>{
-      item.style.display = item.dataset.category === cat ? "block" : "none";
-    });
-  };
-});
-
-// Tombol Beli → halaman payment.html
 document.addEventListener("click", e=>{
   if(e.target.classList.contains("buy-btn")){
     let name = e.target.dataset.name;
     let price = e.target.dataset.price;
-    window.location.href = `payment.html?paket=${encodeURIComponent(name)}&harga=${encodeURIComponent(price)}`;
+
+    window.location.href =
+      `payment.html?paket=${encodeURIComponent(name)}&harga=${encodeURIComponent(price)}`;
   }
 });
 </script>
