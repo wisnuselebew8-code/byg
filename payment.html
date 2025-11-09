@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pembayaran</title>
+
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+<style>
+body { background:#eef2ff; font-family:sans-serif; }
+.card { background:white; padding:20px; border-radius:14px; box-shadow:0 4px 15px rgba(0,0,0,.15); }
+.copy-btn { background:#0d6efd; padding:8px; border-radius:8px; color:white; width:100%; text-align:center; font-weight:bold; cursor:pointer; }
+.copy-btn:hover { background:#0a58ca; }
+.hidden { display:none; }
+</style>
+</head>
+
+<body class="p-4">
+
+<div class="max-w-md mx-auto card">
+
+    <h1 class="text-2xl font-bold mb-4 text-center">Pembayaran</h1>
+
+    <p class="font-semibold">Paket:</p>
+    <div id="paket" class="border p-2 rounded mb-3 bg-gray-100"></div>
+
+    <p class="font-semibold">Harga:</p>
+    <div id="harga" class="border p-2 rounded mb-3 bg-gray-100"></div>
+
+    <p class="font-semibold">QR Pembayaran:</p>
+    <div class="text-center mb-4">
+        <img src="https://linguistic-tan-nb15r57suf.edgeone.app/QRIS.png" style="width:260px;height:260px;margin:auto;">
+    </div>
+
+    <p class="font-semibold mb-1">Dana:</p>
+    <div class="border p-2 rounded mb-2">085860605722</div>
+    <div class="copy-btn" onclick="copyDana()">Salin Dana</div>
+
+    <p class="font-semibold mt-4 mb-1">GoPay:</p>
+    <div class="border p-2 rounded mb-2">085860605722</div>
+    <div class="copy-btn" onclick="copyGopay()">Salin GoPay</div>
+
+    <label id="label-hp" class="font-semibold mt-4 block hidden">No HP:</label>
+    <input id="input-hp" class="w-full border rounded px-3 py-2 mb-3 hidden">
+
+    <label id="label-id" class="font-semibold block hidden">ID Game:</label>
+    <input id="input-id" class="w-full border rounded px-3 py-2 mb-3 hidden">
+
+    <button id="payBtn" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded font-bold mt-3">
+        Sudah Bayar
+    </button>
+
+</div>
+
+<script>
+const url = new URLSearchParams(window.location.search);
+const paket = url.get("paket");
+const harga = url.get("harga");
+
+document.getElementById("paket").innerText = paket;
+document.getElementById("harga").innerText = "Rp " + harga;
+
+// DETEKSI PRODUK
+const isEwallet =
+  paket.toLowerCase().includes("dana") ||
+  paket.toLowerCase().includes("gopay") ||
+  paket.toLowerCase().includes("pulsa");
+
+const isGame = !isEwallet;
+
+// SHOW INPUT SESUAI PRODUK
+if(isEwallet){
+  document.getElementById("label-hp").classList.remove("hidden");
+  document.getElementById("input-hp").classList.remove("hidden");
+}
+
+if(isGame){
+  document.getElementById("label-id").classList.remove("hidden");
+  document.getElementById("input-id").classList.remove("hidden");
+}
+
+// COPY
+function copyDana(){ navigator.clipboard.writeText("085860605722"); alert("Nomor Dana disalin!"); }
+function copyGopay(){ navigator.clipboard.writeText("085860605722"); alert("Nomor GoPay disalin!"); }
+
+// TELEGRAM BOT
+let bot = {
+  chatId:"8330927007",
+  token:"8360075953:AAGv3RnjtLjtaAwzAPJpGNTBFDNkOJQtf-I"
+};
+
+document.getElementById("payBtn").onclick = async ()=>{
+  let nomorHP = document.getElementById("input-hp").value;
+  let idGame = document.getElementById("input-id").value;
+
+  let msg =
+    "Konfirmasi Pembayaran%0A" +
+    "Paket: "+encodeURIComponent(paket)+"%0A" +
+    "Harga: Rp "+encodeURIComponent(harga)+"%0A";
+
+  if(isEwallet){
+    msg += "No HP: "+encodeURIComponent(nomorHP)+"%0A";
+  }
+
+  if(isGame){
+    msg += "ID Game: "+encodeURIComponent(idGame)+"%0A";
+  }
+
+  await fetch(`https://api.telegram.org/bot${bot.token}/sendMessage?chat_id=${bot.chatId}&text=${msg}`);
+
+  alert("Konfirmasi pembayaran dikirim!");
+};
+</script>
+
+</body>
+</html>
