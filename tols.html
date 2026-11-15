@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pemisah 50 + Sisa</title>
+<style>
+  *{box-sizing:border-box;font-family:system-ui,Arial}
+  body{margin:0;background:#0f172a;color:#fff;min-height:100vh;display:flex;justify-content:center;padding:16px}
+  .card{background:#1e293b;width:100%;max-width:560px;border-radius:16px;padding:20px;height:fit-content}
+  h2{margin:0 0 6px} p{color:#94a3b8;margin:0 0 12px;font-size:14px}
+  textarea,input{width:100%;background:#0f172a;border:1px solid #334155;color:#fff;border-radius:10px;padding:12px;outline:none}
+  textarea{height:220px;resize:vertical}
+  input{margin-bottom:10px}
+  button{width:100%;padding:13px;border:none;border-radius:10px;background:#22c55e;color:#000;font-weight:800;cursor:pointer;margin-top:12px}
+  button.secondary{background:#334155;color:#fff}
+  button.modeBtn{background:#334155;color:#fff;margin:0}
+  button.modeBtn.active{background:#22c55e;color:#000}
+  .hidden{display:none}
+  .hasil{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px;margin-top:10px;white-space:pre-wrap;font-size:14px;max-height:150px;overflow:auto}
+  .badge{background:#22c55e;color:#000;font-size:12px;font-weight:800;padding:4px 8px;border-radius:20px}
+  .badge-sisa{background:#facc15;color:#000;font-size:12px;font-weight:800;padding:4px 8px;border-radius:20px}
+  .top{display:flex;justify-content:space-between;align-items:center}
+  .upload{border:2px dashed #475569;border-radius:12px;padding:18px;text-align:center;cursor:pointer;background:#0f172a;display:block}
+  .tab{display:flex;gap:8px;margin-bottom:12px}
+  .tab button{margin:0;background:#334155;color:#fff}
+  .tab button.active{background:#22c55e;color:#000}
+  label{font-size:13px;color:#cbd5e1;display:block;margin:12px 0 6px}
+  .modeBox{display:flex;gap:8px}
+</style>
+</head>
+<body>
+<div class="card">
+  <div id="slide1">
+    <div class="top"><h2>Slide 1 - Masukin Teks</h2><span class="badge">1 / 2</span></div>
+    <p>1 baris = 1 data. Test:tww whwh:1.1.1 = 1 baris.</p>
+    <div class="tab">
+      <button id="btnPaste" class="active" onclick="gantiMode('paste')">✍️ Paste</button>
+      <button id="btnUpload" onclick="gantiMode('upload')">📁 Upload</button>
+    </div>
+    <div id="modePaste"><textarea id="teks" placeholder="Test:tww whwh:1.1.1
+Test:tww whwh:1.1.1
+Test:tww whwh:1.1.12"></textarea></div>
+    <div id="modeUpload" class="hidden">
+      <label for="fileInput" class="upload"><b style="color:#22c55e">📁 Klik Upload File .txt</b><br><span id="namaFileUpload" style="font-size:13px;color:#94a3b8">Belum ada file</span></label>
+      <input type="file" id="fileInput" accept=".txt,.csv,.md" style="display:none">
+      <textarea id="previewFile" placeholder="Isi file muncul disini..." readonly style="margin-top:10px"></textarea>
+    </div>
+    <p id="infoKata" style="color:#22c55e;font-weight:700">Total: 0 baris</p>
+    <button onclick="keSlide2()">Lanjut ➜</button>
+  </div>
+
+  <div id="slide2" class="hidden">
+    <div class="top"><h2>Slide 2 - Pisah File</h2><span class="badge">2 / 2</span></div>
+    <label>Nama File Output</label>
+    <input id="namaFile" value="wisnufresh">
+    <label>Pilih Mode Pisah:</label>
+    <div class="modeBox">
+      <button type="button" id="mode50Sisa" class="modeBtn active" onclick="setModePisah('50sisa')">✂️ Pisah 50 Aja<br><small>50 + Sisa</small></button>
+      <button type="button" id="modeSemua" class="modeBtn" onclick="setModePisah('semua')">📂 Pisah Semua<br><small>50,50,50...</small></button>
+    </div>
+
+    <label>Ambil Berapa Baris Pertama?</label>
+    <input id="perKata" type="number" value="50" min="1">
+    <p id="infoSisa" style="font-size:13px;color:#facc15"></p>
+    <button onclick="proses()">Pisah Otomatis ✂️</button>
+    <button class="secondary" onclick="kembali()">⬅ Kembali</button>
+    <div id="output"></div>
+  </div>
+</div>
+
+<script>
+let fileContent = "";
+let modeAktif = "paste";
+let modePisah = "50sisa"; // default yang lu mau
+
+function setModePisah(m){
+  modePisah = m;
+  document.getElementById('mode50Sisa').classList.toggle('active', m==='50sisa');
+  document.getElementById('modeSemua').classList.toggle('active', m==='semua');
+  updateInfoSisa();
+}
+function gantiMode(mode){
+  modeAktif = mode;
+  document.getElementById('modePaste').classList.toggle('hidden', mode!=='paste');
+  document.getElementById('modeUpload').classList.toggle('hidden', mode!=='upload');
+  document.getElementById('btnPaste').classList.toggle('active', mode==='paste');
+  document.getElementById('btnUpload').classList.toggle('active', mode==='upload');
+  updateInfo();
+}
+function getTeks(){
+  if(modeAktif==='upload') return fileContent || document.getElementById('previewFile').value;
+  return document.getElementById('teks').value;
+}
+function getBaris(){
+  const t = getTeks() || "";
+  return t.split(/\r?\n/).filter(line => line.trim() !== "");
+}
+function updateInfo(){
+  const baris = getBaris();
+  document.getElementById('infoKata').textContent = `Total: ${baris.length} baris`;
+}
+const teksEl = document.getElementById('teks');
+['input','paste','change','keyup'].forEach(ev=>teksEl.addEventListener(ev,()=>setTimeout(updateInfo,30)));
+document.getElementById('fileInput').addEventListener('change', function(e){
+  const file = e.target.files[0]; if(!file) return;
+  document.getElementById('namaFileUpload').textContent = file.name;
+  const r = new FileReader();
+  r.onload = ev=>{ fileContent = ev.target.result; document.getElementById('previewFile').value = fileContent; updateInfo(); };
+  r.readAsText(file);
+});
+function keSlide2(){
+  const b = getBaris();
+  if(b.length===0){ alert('Masih kosong!'); return; }
+  window.barisFinal = b;
+  document.getElementById('slide1').classList.add('hidden');
+  document.getElementById('slide2').classList.remove('hidden');
+  updateInfoSisa();
+}
+function updateInfoSisa(){
+  const baris = window.barisFinal || getBaris();
+  if(!baris.length) return;
+  const per = parseInt(document.getElementById('perKata').value) || 50;
+  const sisa = baris.length - per;
+  if(modePisah==='50sisa'){
+    document.getElementById('infoSisa').textContent = sisa <= 0 ? `Total cuma ${baris.length} baris, kurang dari ${per}.` : `${baris.length} baris -> File 1 = ${per} baris + File 2 = ${sisa} baris (sisa). Total 2 file!`;
+  } else {
+    const totalFile = Math.ceil(baris.length / per);
+    document.getElementById('infoSisa').textContent = `${baris.length} baris -> ${totalFile} file @${per} baris.`;
+  }
+}
+document.getElementById('perKata').addEventListener('input', updateInfoSisa);
+function kembali(){
+  document.getElementById('slide2').classList.add('hidden');
+  document.getElementById('slide1').classList.remove('hidden');
+}
+function proses(){
+  const baris = window.barisFinal || getBaris();
+  const nama = document.getElementById('namaFile').value.trim() || 'wisnufresh';
+  const per = parseInt(document.getElementById('perKata').value) || 50;
+  let potongan = [];
+  if(modePisah==='50sisa'){
+    // INI YANG LU MAU: cuma potong sekali, sisanya jadi 1 file gede
+    const pertama = baris.slice(0, per);
+    const sisa = baris.slice(per);
+    potongan.push({label:`${per} baris pertama`, isi: pertama.join('\n')});
+    if(sisa.length > 0) potongan.push({label:`SISA ${sisa.length} baris`, isi: sisa.join('\n')});
+  } else {
+    for(let i=0;i<baris.length;i+=per) potongan.push({label:`${Math.min(per, baris.length-i)} baris`, isi: baris.slice(i,i+per).join('\n')});
+  }
+  const out = document.getElementById('output');
+  out.innerHTML = '';
+  window._files = potongan.map((p,idx)=>({nama:`${nama}_${idx+1}.txt`, isi:p.isi, label:p.label}));
+  out.innerHTML = `<p style="color:#fff">Jadi ${potongan.length} file.</p>`;
+  const btnAll = document.createElement('button');
+  btnAll.textContent = `Download Semua (${potongan.length} File) ⬇️`;
+  btnAll.onclick = ()=> window._files.forEach((f,i)=>setTimeout(()=>downloadSatu(i), i*300));
+  out.appendChild(btnAll);
+  window._files.forEach((f,idx)=>{
+    const div = document.createElement('div');
+    div.style.marginTop = '14px';
+    div.innerHTML = `<b>${f.nama}</b> <span class="${idx===1 && modePisah==='50sisa'?'badge-sisa':'badge'}">${f.label}</span><div class="hasil">${f.isi.substring(0,300)}</div><button class="secondary" onclick="copyTeks(${idx})">Salin</button><button onclick="downloadSatu(${idx})">Download ${f.nama}</button>`;
+    out.appendChild(div);
+  });
+}
+function copyTeks(i){ navigator.clipboard.writeText(window._files[i].isi); alert('Tersalin!'); }
+function downloadSatu(i){
+  const f = window._files[i];
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([f.isi],{type:'text/plain;charset=utf-8'}));
+  a.download = f.nama; a.click();
+}
+</script>
+</body>
+</html>
